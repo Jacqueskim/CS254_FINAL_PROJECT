@@ -2545,6 +2545,7 @@ void output_data_csv(const uca_org_t & fin_res, string fn)
   {
     if (print_index == true)
     {
+      // Normal input / output
       file << "Tech node (nm), ";
       file << "Capacity (bytes), ";
       file << "Number of banks, ";
