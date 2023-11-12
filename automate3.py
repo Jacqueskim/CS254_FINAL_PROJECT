@@ -29,12 +29,16 @@ def set_cache_asso(lines, asso):
 
 def parse_results(olines):
     d = dict()
-    d["access_time"] = float(olines[57].split(':')[-1])
-    d["cycle_time"] = float(olines[58].split(':')[-1])
-    d["dyn_read"] = float(olines[59].split(':')[-1])
-    d["dyn_write"] = float(olines[60].split(':')[-1])
-    d["leakage"] = float(olines[61].split(':')[-1])
-    d["gate_leakage"] = float(olines[62].split(':')[-1])
+    # print(olines)
+    try:
+        d["access_time"] = float(olines[57].split(':')[-1])
+        d["cycle_time"] = float(olines[58].split(':')[-1])
+        d["dyn_read"] = float(olines[59].split(':')[-1])
+        d["dyn_write"] = float(olines[60].split(':')[-1])
+        d["leakage"] = float(olines[61].split(':')[-1])
+        d["gate_leakage"] = float(olines[62].split(':')[-1])
+    except:
+        print(olines)
     return d
 
 def d2list(d):
@@ -49,8 +53,10 @@ lines = f.readlines()
 results = list()
 associativities = [1, 2, 4]
 cache_size_list = [base*m for base in [2**i for i in range(9,27)] for m in range(4,8)]
+associativity_size_list= [a for a in [2**j for j in range(0,11)] ] + [0]
+print(associativity_size_list)
 print(cache_size_list)
-for associativity in associativities:
+for associativity in associativity_size_list:
     print(associativity)
     for cache_size in cache_size_list:
         print("#",end='',flush=True)
@@ -66,6 +72,7 @@ for associativity in associativities:
             olines = run_result.stdout.split('\n')
             result = parse_results(olines)
         results.append([associativity, cache_size] + d2list(result))
+        # print(results)
     print("")
 f_p = open("results.pkl",'wb')
 pickle.dump(results, f_p)

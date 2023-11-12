@@ -3448,6 +3448,7 @@ void output_UCA(uca_org_t *fr)
 
     cout << endl << endl <<  "Area Components:" << endl << endl;
     /* Data array area stats */
+    
     if (!(g_ip->pure_cam || g_ip->fully_assoc))
     	cout <<  "  Data array: Area (mm2): " << fr->data_array2->area * 1e-6 << endl;
     else if (g_ip->pure_cam)
