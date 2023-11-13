@@ -27,18 +27,34 @@ def set_cache_asso(lines, asso):
     #else:
     #    lines[4] = "\n"
 
-def parse_results(olines):
+def parse_results(olines, associativity):
     d = dict()
     # print(olines)
+    # try:
+    # print(olines[58], "onlines")
     try:
-        d["access_time"] = float(olines[57].split(':')[-1])
-        d["cycle_time"] = float(olines[58].split(':')[-1])
-        d["dyn_read"] = float(olines[59].split(':')[-1])
-        d["dyn_write"] = float(olines[60].split(':')[-1])
-        d["leakage"] = float(olines[61].split(':')[-1])
-        d["gate_leakage"] = float(olines[62].split(':')[-1])
+        if associativity >0:
+            d["access_time"] = float(olines[57].split(':')[-1])
+            d["cycle_time"] = float(olines[58].split(':')[-1])
+            d["dyn_read"] = float(olines[59].split(':')[-1])
+            d["dyn_write"] = float(olines[60].split(':')[-1])
+            d["leakage"] = float(olines[61].split(':')[-1])
+            d["gate_leakage"] = float(olines[62].split(':')[-1])
+        else:
+            d["access_time"] = float(olines[59].split(':')[-1])
+            d["cycle_time"] = float(olines[60].split(':')[-1])
+            d["dyn_read"] = float(olines[62].split(':')[-1])
+            d["dyn_write"] = float(olines[63].split(':')[-1])
+            d["leakage"] = float(olines[64].split(':')[-1])
+            d["gate_leakage"] = float(olines[65].split(':')[-1])
     except:
-        print(olines)
+        # print(olines[59], "this is access time")
+        # print(olines[60], "this is cycle time")
+        # print(olines[62])
+        # print(olines[63])
+        # print(olines[64])
+        # print(olines[65])
+        print()
     return d
 
 def d2list(d):
@@ -53,7 +69,7 @@ lines = f.readlines()
 results = list()
 associativities = [1, 2, 4]
 cache_size_list = [base*m for base in [2**i for i in range(9,27)] for m in range(4,8)]
-associativity_size_list= [a for a in [2**j for j in range(0,11)] ] + [0]
+associativity_size_list= [a for a in [2**j for j in range(0,11)] ] + [0] 
 print(associativity_size_list)
 print(cache_size_list)
 for associativity in associativity_size_list:
@@ -70,7 +86,7 @@ for associativity in associativity_size_list:
             result = {}
         else:
             olines = run_result.stdout.split('\n')
-            result = parse_results(olines)
+            result = parse_results(olines ,associativity)
         results.append([associativity, cache_size] + d2list(result))
         # print(results)
     print("")
