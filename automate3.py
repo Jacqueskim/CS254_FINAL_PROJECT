@@ -29,7 +29,7 @@ def set_cache_asso(lines, asso):
 
 def parse_results(olines, associativity):
     d = dict()
-    # print(olines)
+    # print(olines, "olines")
     # try:
     # print(olines[58], "onlines")
     try:
@@ -54,7 +54,7 @@ def parse_results(olines, associativity):
         # print(olines[63])
         # print(olines[64])
         # print(olines[65])
-        print()
+        print("in the except")
     return d
 
 def d2list(d):
@@ -69,7 +69,7 @@ lines = f.readlines()
 results = list()
 associativities = [1, 2, 4]
 cache_size_list = [base*m for base in [2**i for i in range(9,27)] for m in range(4,8)]
-associativity_size_list= [a for a in [2**j for j in range(0,11)] ] + [0] 
+associativity_size_list= [a for a in [2**j for j in range(0,11)] ]
 print(associativity_size_list)
 print(cache_size_list)
 for associativity in associativity_size_list:
@@ -84,6 +84,7 @@ for associativity in associativity_size_list:
         run_result = run_program()
         if run_result.returncode != 0:
             result = {}
+            # print(run_result)
         else:
             olines = run_result.stdout.split('\n')
             result = parse_results(olines ,associativity)
