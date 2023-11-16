@@ -69,7 +69,7 @@ lines = f.readlines()
 results = list()
 associativities = [1, 2, 4]
 cache_size_list = [base*m for base in [2**i for i in range(9,27)] for m in range(4,8)]
-associativity_size_list= [a for a in [2**j for j in range(0,11)] ]
+associativity_size_list= [a for a in [2**j for j in range(0,5)] ]
 print(associativity_size_list)
 print(cache_size_list)
 for associativity in associativity_size_list:
@@ -88,7 +88,7 @@ for associativity in associativity_size_list:
         else:
             olines = run_result.stdout.split('\n')
             result = parse_results(olines ,associativity)
-        results.append([associativity, cache_size] + d2list(result))
+            results.append([associativity, cache_size] + d2list(result))
         # print(results)
     print("")
 f_p = open("results.pkl",'wb')
